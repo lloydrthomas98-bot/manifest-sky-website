@@ -77,6 +77,7 @@ a:hover { color: var(--text); }
 /* ---------- Hero ---------- */
 
 .hero {
+  position: relative;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -152,7 +153,6 @@ a:hover { color: var(--text); }
   left: 50%;
   transform: translateX(-50%);
   color: var(--text-faint);
-  font-size: 22px;
   animation: drift 2.6s ease-in-out infinite;
 }
 
@@ -183,7 +183,15 @@ a:hover { color: var(--text); }
 
 .step.visible { opacity: 1; transform: translateY(0); }
 
-.step .emoji { font-size: 44px; margin-bottom: 22px; filter: drop-shadow(0 0 18px rgba(139, 124, 246, 0.5)); }
+/* Step markers rendered like in-app stars: white spark core, coloured halo */
+.step .orb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin: 0 auto 30px;
+  background: radial-gradient(circle, #FFFFFF 0%, #FFFFFF 30%, currentColor 72%);
+  box-shadow: 0 0 16px 3px currentColor, 0 0 56px 18px rgba(139, 124, 246, 0.22);
+}
 
 .step h2 {
   font-size: clamp(28px, 4.5vw, 40px);
@@ -233,13 +241,33 @@ a:hover { color: var(--text); }
   margin-bottom: 10px;
 }
 
+.star-card .meta span { display: inline-flex; align-items: center; gap: 7px; }
+
+.cat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px 1px rgba(232, 200, 126, 0.8);
+}
+
 .star-card .text { font-size: 17px; color: var(--text); }
 
 .star-card .energy {
   margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
   font-weight: 600;
   color: var(--gold);
+}
+
+.star-card .energy .spark {
+  width: 13px;
+  height: 13px;
+  fill: var(--gold);
+  filter: drop-shadow(0 0 6px rgba(232, 200, 126, 0.8));
 }
 
 /* ---------- Final CTA ---------- */
