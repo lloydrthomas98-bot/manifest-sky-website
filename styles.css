@@ -1,0 +1,328 @@
+/* Manifest Sky — mirrors the app's design system (constants/theme.ts) */
+
+:root {
+  --night: #0E0B1E;
+  --night-sky: #1B1538;
+  --card: #191430;
+  --border: #2A2347;
+  --violet: #8B7CF6;
+  --violet-soft: #B4A7FB;
+  --gold: #E8C87E;
+  --gold-star: #F5D78E;
+  --text: #F3F1FA;
+  --text-secondary: #A9A3C2;
+  --text-faint: #6E6890;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--night);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--violet-soft); text-decoration: none; }
+a:hover { color: var(--text); }
+
+/* ---------- Sky canvas ---------- */
+
+#sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+}
+
+.content { position: relative; z-index: 1; }
+
+/* ---------- Nav ---------- */
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  background: linear-gradient(to bottom, rgba(14, 11, 30, 0.85), rgba(14, 11, 30, 0));
+}
+
+.nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+
+.nav .brand img { width: 26px; height: 26px; }
+
+.nav .links { display: flex; gap: 22px; font-size: 14px; font-weight: 500; }
+.nav .links a { color: var(--text-secondary); }
+.nav .links a:hover { color: var(--text); }
+
+/* ---------- Hero ---------- */
+
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+}
+
+.hero .whisper {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(44px, 9vw, 92px);
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  background: linear-gradient(135deg, #F3F1FA 20%, var(--violet-soft) 60%, var(--gold-star));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 80px rgba(139, 124, 246, 0.35);
+}
+
+.hero .tagline {
+  margin-top: 26px;
+  font-size: clamp(18px, 2.6vw, 24px);
+  color: var(--text-secondary);
+  max-width: 560px;
+  font-weight: 400;
+}
+
+.hero .tagline strong { color: var(--gold); font-weight: 600; }
+
+.cta {
+  margin-top: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 16px 38px;
+  border-radius: 999px;
+  background: var(--violet);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  box-shadow: 0 0 40px rgba(139, 124, 246, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  color: #fff;
+  box-shadow: 0 0 60px rgba(139, 124, 246, 0.65);
+}
+
+.cta .soon { font-size: 13px; color: var(--text-faint); font-weight: 500; }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-faint);
+  font-size: 22px;
+  animation: drift 2.6s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(-50%, 0); opacity: 0.5; }
+  50% { transform: translate(-50%, 8px); opacity: 1; }
+}
+
+/* ---------- Journey sections ---------- */
+
+.journey {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.step {
+  min-height: 70svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.step.visible { opacity: 1; transform: translateY(0); }
+
+.step .emoji { font-size: 44px; margin-bottom: 22px; filter: drop-shadow(0 0 18px rgba(139, 124, 246, 0.5)); }
+
+.step h2 {
+  font-size: clamp(28px, 4.5vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 18px;
+}
+
+.step p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.step .gold { color: var(--gold-star); }
+
+.step .it-happened {
+  display: inline-block;
+  margin-top: 26px;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold-star);
+  text-shadow: 0 0 40px rgba(245, 215, 142, 0.6);
+}
+
+/* Example manifestation card — same shape as the in-app StarCard */
+.star-card {
+  margin: 30px auto 0;
+  max-width: 400px;
+  text-align: left;
+  background: rgba(25, 20, 48, 0.82);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.45);
+}
+
+.star-card .meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+}
+
+.star-card .text { font-size: 17px; color: var(--text); }
+
+.star-card .energy {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+/* ---------- Final CTA ---------- */
+
+.final-cta {
+  text-align: center;
+  padding: 120px 24px 140px;
+}
+
+.final-cta h2 {
+  font-size: clamp(30px, 5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.final-cta p { color: var(--text-secondary); font-size: 18px; margin-bottom: 36px; }
+
+/* ---------- Footer ---------- */
+
+footer {
+  border-top: 1px solid var(--border);
+  background: rgba(14, 11, 30, 0.9);
+  padding: 44px 28px 54px;
+  font-size: 13px;
+  color: var(--text-faint);
+}
+
+.footer-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+footer .links { display: flex; flex-direction: column; gap: 8px; }
+footer .links a { color: var(--text-secondary); font-size: 13px; }
+footer .company p { margin-bottom: 4px; }
+
+/* ---------- Document pages (privacy / terms / guidelines / support) ---------- */
+
+.doc {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 140px 24px 100px;
+}
+
+.doc h1 {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.doc .updated { color: var(--text-faint); font-size: 14px; margin-bottom: 36px; }
+
+.doc h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 36px 0 12px;
+  color: var(--text);
+}
+
+.doc p, .doc li { color: var(--text-secondary); font-size: 16px; margin-bottom: 12px; }
+.doc ul { padding-left: 22px; margin-bottom: 16px; }
+.doc .card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.doc .card p { margin-bottom: 6px; }
+
+@media (max-width: 640px) {
+  .nav .links { gap: 14px; font-size: 13px; }
+  .nav .links a:nth-child(n+4) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .step { opacity: 1; transform: none; transition: none; }
+  .scroll-hint { animation: none; }
+}
