@@ -238,6 +238,64 @@ a:hover { color: var(--text); }
   filter: drop-shadow(0 0 6px rgba(232, 200, 126, 0.8));
 }
 
+/* ---------- Gratitude Monster teaser ---------- */
+
+.monster-teaser {
+  padding: 96px 0;
+  border-top: 1px solid var(--border);
+}
+
+.teaser-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.monster-teaser h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.monster-teaser p { color: var(--text-secondary); font-size: 16px; margin-bottom: 28px; max-width: 48ch; }
+
+.mini-monster {
+  width: 150px;
+  height: 132px;
+  border-radius: 56px;
+  background: var(--violet);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  box-shadow: 0 10px 40px rgba(139, 124, 246, 0.3);
+}
+
+.mini-eyes { display: flex; gap: 22px; }
+
+.mini-eye {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: mini-blink 5.2s infinite;
+}
+
+.mini-pupil { width: 11px; height: 11px; border-radius: 50%; background: var(--night); }
+
+.mini-mouth { width: 56px; height: 10px; border-radius: 12px; background: var(--night); }
+
+@keyframes mini-blink {
+  0%, 94%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
+}
+
 /* ---------- Final CTA ---------- */
 
 .final-cta {
@@ -317,6 +375,7 @@ footer .company p { margin-bottom: 4px; }
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
   .hero-grid .star-card { max-width: 420px; }
   .how-grid { grid-template-columns: 1fr; gap: 36px; }
+  .teaser-grid { grid-template-columns: 1fr; gap: 36px; }
 }
 
 @media (max-width: 640px) {
