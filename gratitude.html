@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gratitude Monster · Manifest Sky</title>
+  <meta name="description" content="Feed the Gratitude Monster something you are grateful for. Nothing is saved. The monster eats it, and it is gone.">
+  <meta name="theme-color" content="#0E0B1E">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .monster-page {
+      min-height: 86svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 140px 24px 96px;
+      text-align: center;
+    }
+    .monster-page h1 { font-size: 32px; letter-spacing: -0.5px; }
+    .monster-page .sub { color: var(--text-secondary); max-width: 40ch; font-size: 15px; }
+    .monster {
+      position: relative;
+      width: 180px;
+      height: 160px;
+      border-radius: 64px;
+      background: var(--violet);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 8px;
+      transform-origin: bottom center;
+    }
+    .monster.chomp { animation: chomp 420ms ease; }
+    @keyframes chomp {
+      0% { transform: scaleY(1); }
+      35% { transform: scaleY(0.88); }
+      70% { transform: scaleY(1.05); }
+      100% { transform: scaleY(1); }
+    }
+    .eyes { display: flex; gap: 28px; }
+    .eye {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #F3F1FA;
+      display: flex; align-items: center; justify-content: center;
+      animation: blink 5.2s infinite;
+    }
+    @keyframes blink {
+      0%, 94%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.08); }
+    }
+    .pupil { width: 14px; height: 14px; border-radius: 50%; background: var(--night); }
+    .mouth {
+      width: 66px; height: 10px; border-radius: 14px;
+      background: var(--night);
+      transition: height 260ms ease;
+    }
+    .monster.open .mouth { height: 32px; }
+    .chip {
+      position: absolute;
+      left: 50%;
+      bottom: -70px;
+      transform: translateX(-50%);
+      max-width: 260px;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 14px;
+      pointer-events: none;
+      transition: transform 620ms cubic-bezier(0.5, 0, 0.9, 0.4), opacity 620ms ease;
+    }
+    .chip.eaten { transform: translateX(-50%) translateY(-150px) scale(0.2); opacity: 0; }
+    .reaction { color: var(--violet-soft); font-size: 14px; min-height: 20px; }
+    .feed-form { display: flex; gap: 10px; width: min(440px, 100%); margin-top: 6px; }
+    .feed-form input {
+      flex: 1;
+      padding: 13px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 15px;
+      font-family: var(--font);
+    }
+    .feed-form input::placeholder { color: var(--text-faint); }
+    .feed-form input:focus { outline: none; border-color: var(--violet); }
+    .feed-form button {
+      padding: 13px 20px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--violet);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background 120ms ease;
+    }
+    .feed-form button:hover { background: #7A6AE8; }
+    .feed-form button:disabled { opacity: 0.5; cursor: default; }
+    .fineprint { color: var(--text-faint); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+
+  <nav class="nav">
+    <a class="brand" href="/"><img src="logo.svg" alt=""> Manifest Sky</a>
+    <div class="links">
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="guidelines.html">Guidelines</a>
+    </div>
+  </nav>
+
+  <main class="content">
+    <section class="monster-page">
+      <h1>The Gratitude Monster</h1>
+      <p class="sub">Feed it something you are grateful for. It helps to say it, even to a monster.</p>
+
+      <div class="monster" id="monster" aria-hidden="true">
+        <div class="eyes">
+          <div class="eye"><div class="pupil"></div></div>
+          <div class="eye"><div class="pupil"></div></div>
+        </div>
+        <div class="mouth"></div>
+        <div class="chip" id="chip" hidden></div>
+      </div>
+
+      <p class="reaction" id="reaction"></p>
+
+      <form class="feed-form" id="form">
+        <input id="food" type="text" maxlength="120" placeholder="Today I am grateful for…" autocomplete="off" aria-label="Something you are grateful for">
+        <button type="submit" id="feed">Feed</button>
+      </form>
+      <p class="fineprint">Nothing is saved. The monster eats it, and it is gone.</p>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="company">
+          <p><strong>Manifest Sky</strong> is published by MYNEGY LTD</p>
+          <p>Company no. 17395048 · Registered in England and Wales</p>
+          <p>8 Heol-y-beddau, Caerffili, CF83 1AH, United Kingdom</p>
+          <p><a href="mailto:support@manifestsky.com">support@manifestsky.com</a></p>
+        </div>
+        <div class="links">
+          <a href="guide.html">How to Manifest</a>
+          <a href="gratitude.html">Gratitude Monster</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="guidelines.html">Community Guidelines</a>
+          <a href="support.html">Support</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="sky.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      const form = document.getElementById('form');
+      const input = document.getElementById('food');
+      const button = document.getElementById('feed');
+      const monster = document.getElementById('monster');
+      const chip = document.getElementById('chip');
+      const reaction = document.getElementById('reaction');
+      const REACTIONS = ['Om nom.', 'Delicious.', 'The monster glows a little.', 'Burp. Pardon.', 'It would eat another.'];
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text || button.disabled) return;
+        button.disabled = true;
+        input.value = '';
+        reaction.textContent = '';
+
+        chip.textContent = text;
+        chip.hidden = false;
+        chip.classList.remove('eaten');
+        monster.classList.add('open');
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            chip.classList.add('eaten');
+          });
+        });
+
+        setTimeout(function () {
+          monster.classList.remove('open');
+          monster.classList.add('chomp');
+          chip.hidden = true;
+          reaction.textContent = REACTIONS[Math.floor(Math.random() * REACTIONS.length)];
+          setTimeout(function () {
+            monster.classList.remove('chomp');
+            button.disabled = false;
+            input.focus();
+          }, 450);
+        }, 650);
+      });
+    })();
+  </script>
+</body>
+</html>
