@@ -1,6 +1,6 @@
-/* Manifest Sky — animated universe background.
+/* Manifest Sky - animated universe background.
    Mirrors the app's UniverseCanvas: night radial gradient, ambient dust,
-   category-coloured stars with layered halos, breathing sky, shooting stars. */
+   coloured stars with layered halos, breathing sky, shooting stars. */
 
 (function () {
   'use strict';
@@ -178,20 +178,4 @@
   window.addEventListener('resize', resize);
   resize();
   requestAnimationFrame(frame);
-
-  // Reveal journey steps on scroll
-  const steps = document.querySelectorAll('.step');
-  if ('IntersectionObserver' in window && steps.length) {
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
-      }
-    }, { threshold: 0.25 });
-    steps.forEach((s) => io.observe(s));
-  } else {
-    steps.forEach((s) => s.classList.add('visible'));
-  }
 })();
